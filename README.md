@@ -9,3 +9,5 @@ yarn
 
 yarn web
 ```
+
+navigate to http://localhost:8080/deep
