@@ -23,19 +23,16 @@ const App = () => {
   useEffect(() => {
     Linking.getInitialURL()
       .then(url => {
-        console.log('initial url ran');
         if (!url) {
           return;
         }
 
-        console.warn(`initial_url ${url}}`);
-
         if (navigationRef.current?.isReady()) {
-          console.warn(`navigation is ready, navigating to ${url}}!`);
-          if (url.replace('http://localhost:8080', '') === 'deep') {
-            console.log('should navigate too deep!');
-            navigationRef.current.navigate('Deep');
-          }
+          // console.warn(`navigation is ready, navigating to ${url}}!`);
+          // if (url.replace('http://localhost:8080', '') === 'deep') {
+          //   console.log('should navigate too deep!');
+          // navigationRef.current.navigate('Deep');
+          // }
         }
       })
       .catch(e => {
@@ -43,8 +40,18 @@ const App = () => {
       });
   }, []);
 
+  const onStateChange = state => {
+    console.log(state);
+  };
+
+  const onNavigationReady = () => {
+    console.log('navigation ready');
+  };
+
   return (
     <NavigationContainer
+      onStateChange={onStateChange}
+      onReady={onNavigationReady}
       linking={linking}
       ref={navigationRef}
       fallback={<Text>Loading...</Text>}>
