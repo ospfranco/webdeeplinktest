@@ -88,6 +88,11 @@ module.exports = argv => {
         fileLoaderConfiguration,
       ],
     },
+    devServer: {
+      historyApiFallback: {
+        index: 'index.html',
+      },
+    },
     plugins: [
       // Fast refresh plugin
       new ReactRefreshWebpackPlugin(),
