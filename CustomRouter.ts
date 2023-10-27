@@ -36,7 +36,7 @@ function CustomRouter(options: any) {
       console.log(`URL ${window.location.href}`);
       console.log(JSON.stringify(partialState, null, 2));
 
-      partialState.stale = true;
+      // partialState.stale = true;
       // addCentralPaneNavigatorRoute(partialState);
 
       const state = stackRouter.getRehydratedState(partialState, {

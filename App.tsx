@@ -11,14 +11,22 @@ const linking = {
   config: {
     initialRouteName: 'Home' as const,
     screens: {
-      Home: '',
-      Deep: 'deep/:id',
+      SubNavigator: {
+        screens: {
+          B: 'B',
+        },
+      },
+      Deep: 'deep/:id/:second_id',
+      Home: {
+        path: '',
+      },
       NotFound: '*',
     },
   },
 };
 
 const App = () => {
+  const [canRenderRouter, setCanRenderRouter] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigationRef = useRef<
     NavigationContainerRef<{
@@ -49,7 +57,7 @@ const App = () => {
   }, []);
 
   const onStateChange = (state: any) => {
-    console.log(state);
+    // console.log(state);
   };
 
   const onNavigationReady = () => {
@@ -59,9 +67,17 @@ const App = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
+      setCanRenderRouter(true);
+    }, 1000);
+  }, []);
+
+  React.useEffect(() => {
+    setTimeout(() => {
       setLoggedIn(true);
     }, 3000);
   }, []);
+  console.log('🍏 App render');
+  console.log(JSON.stringify(navigationRef.current?.getRootState(), null, 2));
 
   return (
     <NavigationContainer
@@ -70,7 +86,7 @@ const App = () => {
       linking={linking}
       ref={navigationRef}
       fallback={<Text>Loading...</Text>}>
-      <Routes loggedIn={loggedIn} />
+      {canRenderRouter && <Routes loggedIn={loggedIn} />}
     </NavigationContainer>
   );
 };
