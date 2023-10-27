@@ -2,23 +2,31 @@ import {
   NavigationContainer,
   NavigationContainerRef,
 } from '@react-navigation/native';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Routes} from './Routes';
 import {Linking, Text} from 'react-native';
 
 const linking = {
-  // prefixes: ['http://localhost:8080'],
+  prefixes: ['http://localhost:8080'],
   config: {
+    initialRouteName: 'Home' as const,
     screens: {
-      Home: 'home',
-      Deep: 'deep',
+      Home: '',
+      Deep: 'v',
       NotFound: '*',
     },
   },
 };
 
 const App = () => {
-  const navigationRef = useRef<NavigationContainerRef<typeof linking>>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigationRef = useRef<
+    NavigationContainerRef<{
+      Home: undefined;
+      Deep: undefined;
+      NotFound: undefined;
+    }>
+  >(null);
 
   useEffect(() => {
     Linking.getInitialURL()
@@ -40,13 +48,20 @@ const App = () => {
       });
   }, []);
 
-  const onStateChange = state => {
+  const onStateChange = (state: any) => {
     console.log(state);
   };
 
   const onNavigationReady = () => {
     console.log('navigation ready');
+    // navigationRef.current?.navigate('');
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoggedIn(true);
+    }, 3000);
+  }, []);
 
   return (
     <NavigationContainer
@@ -55,7 +70,7 @@ const App = () => {
       linking={linking}
       ref={navigationRef}
       fallback={<Text>Loading...</Text>}>
-      <Routes />
+      <Routes loggedIn={loggedIn} />
     </NavigationContainer>
   );
 };

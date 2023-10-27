@@ -3,9 +3,9 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const appDirectory = path.resolve(__dirname, '../');
+const appDirectory = path.resolve(__dirname, './');
 
-const babelConfig = require('../babel.config');
+const babelConfig = require('./babel.config');
 
 // Babel loader configuration
 const babelLoaderConfiguration = {
@@ -88,10 +88,9 @@ module.exports = argv => {
         fileLoaderConfiguration,
       ],
     },
+    mode: 'development',
     devServer: {
-      historyApiFallback: {
-        index: 'index.html',
-      },
+      historyApiFallback: true,
     },
     plugins: [
       // Fast refresh plugin
