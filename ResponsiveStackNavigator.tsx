@@ -12,9 +12,14 @@ function ResponsiveStackNavigator(props: any) {
       children: props.children,
       screenOptions: props.screenOptions,
       initialRouteName: props.initialRouteName,
-      // Options for useNavigationBuilder won't update on prop change, so we need to pass a getter for the router to have the current state of isSmallScreenWidth.
       getIsSmallScreenWidth: () => false,
     });
+
+  console.log(
+    `🟠 Reponsive stack navigator ${JSON.stringify(state, null, 2)} and url ${
+      window.location.href
+    }`,
+  );
 
   return (
     <NavigationContent>

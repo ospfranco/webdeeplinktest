@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const appDirectory = path.resolve(__dirname, './');
 
@@ -65,6 +64,7 @@ module.exports = argv => {
     output: {
       clean: true,
       path: path.resolve(appDirectory, 'web/dist'),
+      publicPath: '/',
       filename: '[name].[chunkhash].js',
       sourceMapFilename: '[name].[chunkhash].map',
       chunkFilename: '[id].[chunkhash].js',
@@ -90,12 +90,14 @@ module.exports = argv => {
     },
     mode: 'development',
     devServer: {
-      historyApiFallback: true,
+      // disableHostCheck: true,
+      // https: false,
+      hot: true,
+      historyApiFallback: {
+        index: '/',
+      },
     },
     plugins: [
-      // Fast refresh plugin
-      new ReactRefreshWebpackPlugin(),
-
       // Plugin that takes public/index.html and injects script tags with the built bundles
       new HtmlWebpackPlugin({
         template: path.resolve(appDirectory, 'web/public/index.html'),

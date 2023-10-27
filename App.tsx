@@ -7,12 +7,12 @@ import {Routes} from './Routes';
 import {Linking, Text} from 'react-native';
 
 const linking = {
-  prefixes: ['http://localhost:8080'],
+  prefixes: ['http://localhost'],
   config: {
     initialRouteName: 'Home' as const,
     screens: {
       Home: '',
-      Deep: 'v',
+      Deep: 'deep/:id',
       NotFound: '*',
     },
   },
